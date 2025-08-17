@@ -71,7 +71,7 @@
   programs.zsh.enable = true;
 
   users.users = {
-    parzival = {
+    lightweaver = {
       isNormalUser = true;
       description = "Sridhar D Kedlaya";
       extraGroups = ["networkmanager" "wheel" "video" "audio" "input" "uinput" "power" "docker" "libvirtd" "kvm" "adbusers"];
