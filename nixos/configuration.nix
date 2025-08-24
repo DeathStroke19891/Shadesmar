@@ -70,6 +70,8 @@
   environment.pathsToLink = ["/share/zsh"];
   programs.zsh.enable = true;
 
+  networking.hostName = "Shadesmar";
+
   users.users = {
     lightweaver = {
       isNormalUser = true;
