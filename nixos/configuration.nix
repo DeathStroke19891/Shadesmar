@@ -76,6 +76,22 @@
 
   networking.hostName = "Shadesmar";
 
+  services.nginx = {
+    enable = true;
+    virtualHosts."sridharkedlaya.xyz" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "/var/www/root";
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "kedlayasridhar@gmail.com";
+  };
+
   users.users = {
     lightweaver = {
       isNormalUser = true;
