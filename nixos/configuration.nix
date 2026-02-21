@@ -1,12 +1,11 @@
 {
   inputs,
-    lib,
-    config,
-    pkgs,
-    modulesPath,
-    ...
-} @ args:
-{
+  lib,
+  config,
+  pkgs,
+  modulesPath,
+  ...
+} @ args: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -22,8 +21,8 @@
   };
 
   boot.loader.grub = {
-# no need to set devices, disko will add all devices that have a EF02 partition to the list already
-# devices = [ ];
+    # no need to set devices, disko will add all devices that have a EF02 partition to the list already
+    # devices = [ ];
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
@@ -39,10 +38,11 @@
 
   users.users.root.openssh.authorizedKeys.keys =
     [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEx2KGuEn8y49EnYj4IS2JrCwH3Me2DCnzyClAep+Gv5 sridhardked@gmail.com"
-    ] ++ (args.extraPublicKeys or []); # this is used for unit-testing this module and can be removed if not needed
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEx2KGuEn8y49EnYj4IS2JrCwH3Me2DCnzyClAep+Gv5 sridhardked@gmail.com"
+    ]
+    ++ (args.extraPublicKeys or []); # this is used for unit-testing this module and can be removed if not needed
 
-    nix = let
+  nix = let
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
   in {
     settings = {
@@ -50,7 +50,7 @@
       flake-registry = "";
       nix-path = config.nix.nixPath;
       substituters = [
-      	"https://cache.nixos.org/"
+        "https://cache.nixos.org/"
       ];
     };
 

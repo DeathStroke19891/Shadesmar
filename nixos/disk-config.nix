@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{lib, ...}: {
   disko.devices = {
     disk = {
       disk1 = {
@@ -22,38 +21,38 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
+                mountOptions = ["umask=0077"];
               };
             };
             root = {
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" ]; 
-                  subvolumes = {
-                    "/rootfs" = {
-                      mountpoint = "/";
-                    };
-                    "/home" = {
-                      mountOptions = [ "compress=zstd" ];
-                      mountpoint = "/home";
-                    };
-                    "/home/user" = { };
-                    "/nix" = {
-                      mountOptions = [
-                        "compress=zstd"
-                          "noatime"
-                      ];
-                      mountpoint = "/nix";
-                    };
-                    "/test" = { };
-                    "/swap" = {
-                      mountpoint = "/.swapvol";
-                      swap = {
-                        swapfile.size = "20M";
-                      };
+                extraArgs = ["-f"];
+                subvolumes = {
+                  "/rootfs" = {
+                    mountpoint = "/";
+                  };
+                  "/home" = {
+                    mountOptions = ["compress=zstd"];
+                    mountpoint = "/home";
+                  };
+                  "/home/user" = {};
+                  "/nix" = {
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                    mountpoint = "/nix";
+                  };
+                  "/test" = {};
+                  "/swap" = {
+                    mountpoint = "/.swapvol";
+                    swap = {
+                      swapfile.size = "20M";
                     };
                   };
+                };
 
                 mountpoint = "/";
               };
@@ -71,13 +70,13 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" ]; 
-                  subvolumes = {
-                    "/data" = {
-                      mountpoint = "/spiritual_realm";
-                    };
-                    "/test" = { };
+                extraArgs = ["-f"];
+                subvolumes = {
+                  "/data" = {
+                    mountpoint = "/spiritual_realm";
                   };
+                  "/test" = {};
+                };
 
                 mountpoint = "/spiritual_realm";
               };
