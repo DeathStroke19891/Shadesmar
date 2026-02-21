@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
-    
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -17,18 +17,14 @@
     nixpkgs,
     home-manager,
     ...
-  } @ inputs : let
-  inherit (self) outputs;
-  system = "x86_64-linux";
-  pkgs = import nixpkgs {
-    inherit system;
-    config.allowUnfree = true;
-  };
-  in 
-  {
+  } @ inputs: let
+    inherit (self) outputs;
+    systems = ["x86_64-linux"];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+  in {
     formatter = nixpkgs.legacyPackages."x86_64-linux".alejandra;
 
-    packages.${system}.rebuild = pkgs.callPackage ./pkgs/rebuild { };
+    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
     nixosConfigurations = {
       Shadesmar = nixpkgs.lib.nixosSystem {
@@ -38,7 +34,7 @@
         ];
       };
     };
-    
+
     homeConfigurations = {
       "lightweaver@Shadesmar" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance

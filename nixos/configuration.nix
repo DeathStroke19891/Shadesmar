@@ -34,6 +34,7 @@
     git
     neovim
     inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.rebuild
+    inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.home-rebuild
   ];
 
   users.users.root.openssh.authorizedKeys.keys =

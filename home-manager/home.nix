@@ -6,12 +6,10 @@
   pkgs,
   ...
 }: {
-
   imports = [
   ];
 
   nixpkgs = {
-    
     # You can add overlays here
     #overlays = [
     #  outputs.overlays.additions
@@ -75,7 +73,7 @@
   };
 
   xdg.enable = true;
-  
+
   programs.starship = {
     enable = true;
     settings = {
@@ -202,4 +200,3 @@
 
   home.stateVersion = "24.05";
 }
-
