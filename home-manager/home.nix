@@ -93,9 +93,6 @@
   home.packages = with pkgs; [
     alejandra
 
-    taskwarrior3
-    taskwarrior-tui
-
     fastfetch
     bottom
 
@@ -112,8 +109,6 @@
     libqalculate
 
     yazi
-
-    typst
   ];
 
   home.sessionVariables = {
@@ -132,97 +127,6 @@
     enable = true;
     userName = "Sridhar Kedlaya";
     userEmail = "kedlayasridhar@gmail.com";
-    delta = {
-      enable = true;
-      package = pkgs.delta;
-      options = {
-        navigate = true;
-        dark = true;
-      };
-    };
-    extraConfig = {
-      core = {
-        compression = 9;
-        whitespace = "error";
-        preloadindex = true;
-      };
-      advice = {
-        addEmptyPathspec = false;
-        pushNonFastForward = false;
-        statusHints = false;
-      };
-      url."git@github.com:DeathStroke19891/" = {
-        insteadOf = "ds:";
-      };
-      url."git@github.com:" = {
-        insteadOf = "gh:";
-      };
-      # url."ssh://git@github.com/" = {
-      #   insteadOf = "https://github.com/";
-      # };
-      init = {
-        defaultBranch = "dev";
-      };
-      status = {
-        branch = true;
-        showStash = true;
-        showUntrackedFiles = "all";
-      };
-      merge = {
-        conflictstyle = "zdiff3";
-      };
-      interactive = {
-        singlekey = true;
-      };
-      diff = {
-        context = 3;
-        renames = "copies";
-        interHunkContext = 10;
-      };
-      commit = {
-        verbose = true;
-      };
-      push = {
-        autoSetupRemote = true;
-        default = "current";
-        followTags = true;
-      };
-      pull = {
-        default = true;
-        rebase = true;
-      };
-      rebase = {
-        autoStash = true;
-        missingCommitsCheck = "warn";
-      };
-      log = {
-        abbrevCommit = true;
-        graphColors = "blue,yellow,cyan,magenta,green,red";
-      };
-      color."decorate" = {
-        HEAD = "red";
-        branch = "blue";
-        tag = "yellow";
-        remoteBranch = "magenta";
-      };
-      color."branch" = {
-        current = "magenta";
-        local = "default";
-        remote = "yellow";
-        upstream = "green";
-        plain = "blue";
-      };
-      branch = {
-        sort = "-committerdate";
-      };
-      tag = {
-        sort = "-taggerdate";
-      };
-      pager = {
-        branch = false;
-        tag = false;
-      };
-    };
   };
 
   programs.zsh = {
@@ -242,24 +146,11 @@
       rm = "trash -c always put";
       cat = "bat";
       vim = "nvim";
-
-      gs = "git status --short";
-      gd = "git diff --output-indicator-new=' ' --output-indicator-old=' '";
-      gds = "git diff --staged";
-      ga = "git add";
-      gap = "git add --patch";
-      gc = "git commit";
-      gp = "git push";
-      gu = "git pull";
-      gl = "git log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an %ar%C(auto) %D%n%s%n'";
-      gb = "git branch";
-      gi = "git init";
-      gcl = "git clone";
     };
 
     oh-my-zsh = {
       enable = true;
-      plugins = ["sudo" "colored-man-pages" "direnv"];
+      plugins = ["sudo" "colored-man-pages" "direnv" "git" "git-commit"];
     };
 
     history = {
