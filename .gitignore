@@ -4,3 +4,5 @@ result-*
 
 # Ignore automatically generated direnv output
 .direnv
+nixos-switch.log
+home-switch.log
