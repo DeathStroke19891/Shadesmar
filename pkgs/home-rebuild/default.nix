@@ -7,7 +7,7 @@ pkgs.writeShellScriptBin "home-rebuild" ''
   popd
   pushd ~/shadesmar
   echo "home-manager Rebuilding..."
-  ${pkgs.home-manager}/bin/home-manager switch --flake .#parzival@Firestorm &>~/flake_firestorm/home-switch.log || ( cat home-switch.log | grep --color error && false)
+  ${pkgs.home-manager}/bin/home-manager switch --flake .#lightweaver@Shadesmar &>~/shadesmar/home-switch.log || ( cat home-switch.log | grep --color error && false)
   gen=$(home-manager generations | head -n 1)
   ${pkgs.git}/bin/git commit -am "$gen"
 ''
