@@ -125,8 +125,12 @@
 
   programs.git = {
     enable = true;
-    userName = "Sridhar Kedlaya";
-    userEmail = "kedlayasridhar@gmail.com";
+    settings = {
+      user = {
+        name = "Sridhar D Kedlaya";
+        email = "sridhardked@gmail.com";
+      };
+    };
   };
 
   programs.zsh = {
@@ -159,6 +163,8 @@
       ignoreDups = true;
       ignoreAllDups = true;
     };
+
+    dotDir = "${config.xdg.configHome}/zsh";
   };
 
   programs.direnv = {
