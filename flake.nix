@@ -19,10 +19,16 @@
     ...
   } @ inputs : let
   inherit (self) outputs;
+  system = "x86_64-linux";
+  pkgs = import nixpkgs {
+    inherit system;
+    config.allowUnfree = true;
+  };
   in 
   {
     formatter = nixpkgs.legacyPackages."x86_64-linux".alejandra;
 
+    packages.${system}.rebuild = pkgs.callPackage ./pkgs/rebuild { };
 
     nixosConfigurations = {
       Shadesmar = nixpkgs.lib.nixosSystem {
