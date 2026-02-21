@@ -38,7 +38,6 @@
 
   users.users.root.openssh.authorizedKeys.keys =
     [
-# change this to your ssh key
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEx2KGuEn8y49EnYj4IS2JrCwH3Me2DCnzyClAep+Gv5 sridhardked@gmail.com"
     ] ++ (args.extraPublicKeys or []); # this is used for unit-testing this module and can be removed if not needed
 
@@ -49,6 +48,9 @@
       experimental-features = "nix-command flakes";
       flake-registry = "";
       nix-path = config.nix.nixPath;
+      substituters = [
+      	"https://cache.nixos.org/"
+      ];
     };
 
     channel.enable = false;
