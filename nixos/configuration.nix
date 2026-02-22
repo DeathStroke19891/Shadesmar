@@ -86,24 +86,23 @@
 
       locations."/.well-known/matrix/server" = {
         extraConfig = ''
-      default_type application/json;
-      return 200 '{ "m.server": "matrix.sridharkedlaya.xyz:443" }';
-    '';
+          default_type application/json;
+          return 200 '{ "m.server": "matrix.sridharkedlaya.xyz:443" }';
+        '';
       };
 
       locations."/.well-known/matrix/client" = {
         extraConfig = ''
-      default_type application/json;
-      return 200 '{ "m.homeserver": { "base_url": "https://matrix.sridharkedlaya.xyz" } }';
-      add_header Access-Control-Allow-Origin *;
-    '';
+          default_type application/json;
+          return 200 '{ "m.homeserver": { "base_url": "https://matrix.sridharkedlaya.xyz" } }';
+          add_header Access-Control-Allow-Origin *;
+        '';
       };
     };
 
     virtualHosts."matrix.sridharkedlaya.xyz" = {
       enableACME = true;
       forceSSL = true;
-      recommendedProxySettings = true;
 
       locations."/_matrix" = {
         proxyPass = "http://127.0.0.1:8008";
@@ -133,7 +132,7 @@
     defaults.email = "kedlayasridhar@gmail.com";
   };
 
-  sops.defaultSops.file = ./secrets/secrets.yaml;
+  sops.defaultSopsFile = ./secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
 
   sops.age.keyFile = "/home/lightweaver/.config/sops/age/keys.txt";
@@ -162,14 +161,14 @@
   };
 
   systemd.services.dendrite = {
-    serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
+    serviceConfig.SupplementaryGroups = [config.users.groups.keys.name];
   };
 
   users.users = {
     lightweaver = {
       isNormalUser = true;
       description = "Sridhar D Kedlaya";
-      extraGroups = ["networkmanager" "wheel" "video" "audio" "input" "uinput" "power" "docker" "keys"];
+      extraGroups = ["networkmanager" "wheel" "video" "audio" "input" "uinput" "power" "docker"];
       packages = with pkgs; [];
       shell = pkgs.zsh;
     };
