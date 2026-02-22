@@ -139,18 +139,15 @@
 
   sops.secrets = {
     matrix_key = {
-      mode = "0440";
-      group = config.users.groups.keys.name;
+      owner = "dendrite";
     };
     matrix_registration_secret = {
-      mode = "0440";
-      group = config.users.groups.keys.name;
+      owner = "dendrite";
     };
   };
 
   services.dendrite = {
     enable = true;
-    environmentFile = config.sops.secrets.matrix_registration_secret.path;
     settings = {
       global = {
         server_name = "sridharkedlaya.xyz";
@@ -161,7 +158,12 @@
   };
 
   systemd.services.dendrite = {
-    serviceConfig.SupplementaryGroups = [config.users.groups.keys.name];
+    serviceConfig = {
+      User = "dendrite";
+      Environment = ''
+        REGISTRATION_SHARED_SECRET=$(cat ${config.sops.secrets.matrix_registration_secret.path})
+      '';
+    };
   };
 
   users.users = {
@@ -174,7 +176,12 @@
     };
   };
 
-  users.groups.keys = {};
+  users.groups.dendrite = {}; # creates the group
 
+  users.users.dendrite = {
+    isSystemUser = true;
+    createHome = false;
+    group = "dendrite"; # assign the group
+  };
   system.stateVersion = "24.05";
 }
