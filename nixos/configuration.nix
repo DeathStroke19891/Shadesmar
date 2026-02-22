@@ -10,6 +10,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     inputs.disko.nixosModules.disko
+    inputs.sops-nix.nixosModules.sops
     ./disk-config.nix
     ./hardware-configuration.nix
   ];
@@ -82,6 +83,32 @@
       enableACME = true;
       forceSSL = true;
       root = "/var/www/root";
+
+      locations."/.well-known/matrix/server" = {
+        extraConfig = ''
+      default_type application/json;
+      return 200 '{ "m.server": "matrix.sridharkedlaya.xyz:443" }';
+    '';
+      };
+
+      locations."/.well-known/matrix/client" = {
+        extraConfig = ''
+      default_type application/json;
+      return 200 '{ "m.homeserver": { "base_url": "https://matrix.sridharkedlaya.xyz" } }';
+      add_header Access-Control-Allow-Origin *;
+    '';
+      };
+    };
+
+    virtualHosts."matrix.sridharkedlaya.xyz" = {
+      enableACME = true;
+      forceSSL = true;
+      recommendedProxySettings = true;
+
+      locations."/_matrix" = {
+        proxyPass = "http://127.0.0.1:8008";
+        proxyWebsockets = true;
+      };
     };
   };
 
@@ -92,15 +119,49 @@
     defaults.email = "kedlayasridhar@gmail.com";
   };
 
+  sops.defaultSops.file = ./secrets/secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+
+  sops.age.keyFile = "/home/lightweaver/.config/sops/age/keys.txt";
+
+  sops.secrets = {
+    matrix_key = {
+      mode = "0440";
+      group = config.users.groups.keys.name;
+    };
+    matrix_registration_secret = {
+      mode = "0440";
+      group = config.users.groups.keys.name;
+    };
+  };
+
+  services.dendrite = {
+    enable = true;
+    environmentFile = config.sops.secrets.matrix_registration_secret.path;
+    settings = {
+      global = {
+        server_name = "sridharkedlaya.xyz";
+        private_key = config.sops.secrets.matrix_key.path;
+      };
+      client_api.registration_shared_secret = "$REGISTRATION_SHARED_SECRET";
+    };
+  };
+
+  systemd.services.dendrite = {
+    serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
+  };
+
   users.users = {
     lightweaver = {
       isNormalUser = true;
       description = "Sridhar D Kedlaya";
-      extraGroups = ["networkmanager" "wheel" "video" "audio" "input" "uinput" "power" "docker" "libvirtd" "kvm" "adbusers"];
+      extraGroups = ["networkmanager" "wheel" "video" "audio" "input" "uinput" "power" "docker" "keys"];
       packages = with pkgs; [];
       shell = pkgs.zsh;
     };
   };
+
+  users.groups.keys = {};
 
   system.stateVersion = "24.05";
 }
