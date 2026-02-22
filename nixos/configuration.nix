@@ -160,7 +160,7 @@
   systemd.services.dendrite = {
     serviceConfig = {
       User = "dendrite";
-      EnvironmentFile = "${config.sops.secrets.matrix_registration_secret.path}";
+      EnvironmentFile = config.sops.secrets.matrix_registration_secret.path;
     };
   };
 
