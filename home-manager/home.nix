@@ -107,10 +107,13 @@
     libqalculate
 
     yazi
+
+    misskey
   ];
 
   home.sessionVariables = {
     EDITOR = "vim";
+    MISSKEY_CONFIG_YML = "/home/lightweaver/config.yml";
   };
 
   programs.home-manager.enable = true;
