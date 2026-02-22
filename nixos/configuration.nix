@@ -150,6 +150,7 @@
 
   services.dendrite = {
     enable = true;
+    environmentFile = config.sops.secrets.matrix_registration_secret.path;
     settings = {
       global = {
         server_name = "sridharkedlaya.xyz";
@@ -161,7 +162,6 @@
 
   systemd.services.dendrite = {
     serviceConfig.SupplementaryGroups = [config.users.groups.keys.name];
-    serviceConfig.EnvironmentFile = [config.sops.secrets.matrix_registration_secret.path];
   };
 
   users.users = {
