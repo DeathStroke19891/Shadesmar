@@ -160,9 +160,7 @@
   systemd.services.dendrite = {
     serviceConfig = {
       User = "dendrite";
-      Environment = ''
-        REGISTRATION_SHARED_SECRET=$(cat ${config.sops.secrets.matrix_registration_secret.path})
-      '';
+      EnvironmentFile = config.sops.secrets.matrix_registration_secret.path;
     };
   };
 
