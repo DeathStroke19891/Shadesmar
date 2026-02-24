@@ -107,6 +107,7 @@
     libqalculate
 
     yazi
+    hledger
   ];
 
   home.sessionVariables = {
