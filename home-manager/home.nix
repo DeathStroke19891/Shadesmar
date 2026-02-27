@@ -112,6 +112,7 @@
 
   home.sessionVariables = {
     EDITOR = "vim";
+    LEDGER_FILE = "/home/lightweaver/parallaxa/main.journal";
   };
 
   programs.home-manager.enable = true;
