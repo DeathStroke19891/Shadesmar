@@ -147,7 +147,6 @@
       home-update = "home-manager switch";
       cd = "z";
       ls = "eza";
-      rm = "trash -c always put";
       cat = "bat";
       vim = "nvim";
     };
