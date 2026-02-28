@@ -166,6 +166,14 @@
     };
   };
 
+  users.groups.dendrite = {};
+
+  users.users.dendrite = {
+    isSystemUser = true;
+    createHome = false;
+    group = "dendrite";
+  };
+
   users.users = {
     lightweaver = {
       isNormalUser = true;
@@ -176,12 +184,5 @@
     };
   };
 
-  users.groups.dendrite = {}; # creates the group
-
-  users.users.dendrite = {
-    isSystemUser = true;
-    createHome = false;
-    group = "dendrite"; # assign the group
-  };
   system.stateVersion = "24.05";
 }
