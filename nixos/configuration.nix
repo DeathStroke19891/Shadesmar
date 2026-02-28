@@ -155,7 +155,6 @@
         server_name = "sridharkedlaya.xyz";
         private_key = config.sops.secrets.matrix_key.path;
       };
-      client_api.registration_shared_secret = config.sops.secrets.matrix_registration_secret.path;
     };
   };
 
