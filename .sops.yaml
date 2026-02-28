@@ -1,0 +1,7 @@
+keys:
+  - &primary age1y9eqrsstrkj8xte5pm2waxj2hmcm4xjyzvskw2suv75hq4lpdscsyk4yaw
+creation_rules:
+  - path_regex: nixos/secrets/secrets.yaml$
+    key_groups:
+    - age:
+      - *primary
