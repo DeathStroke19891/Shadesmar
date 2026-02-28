@@ -34,6 +34,8 @@
     curl
     git
     neovim
+    vim
+    sops
     inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.rebuild
     inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.home-rebuild
   ];
