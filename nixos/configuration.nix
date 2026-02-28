@@ -11,6 +11,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     inputs.disko.nixosModules.disko
     inputs.sops-nix.nixosModules.sops
+    inputs.simple-nixos-mailserver.nixosModule
     ./disk-config.nix
     ./hardware-configuration.nix
   ];
@@ -146,6 +147,9 @@
     matrix_registration_secret = {
       owner = "dendrite";
     };
+    mail_sridharkedlaya_xyz = {
+      owner = "virtualMail";
+    };
   };
 
   services.dendrite = {
@@ -181,6 +185,33 @@
       packages = with pkgs; [];
       shell = pkgs.zsh;
     };
+  };
+
+  mailserver = {
+    enable = true;
+    stateVersion = 3;
+    fqdn = "sridharkedlaya.xyz";
+    domains = ["sridharkedlaya.xyz"];
+
+    # reference an existing ACME configuration
+    x509.useACMEHost = config.mailserver.fqdn;
+
+    # A list of all login accounts. To create the password hashes, use
+    # nix-shell -p mkpasswd --run 'mkpasswd -s'
+    loginAccounts = {
+      "sridhar@sridharkedlaya.xyz" = {
+        hashedPasswordFile = config.sops.secrets.mail_sridharkedlaya_xyz.path;
+        aliases = ["mail@sridharkedlaya.xyz"];
+      };
+    };
+  };
+
+  users.groups.virtualMail = {};
+
+  users.users.virtualMail = {
+    isSystemUser = true;
+    createHome = false;
+    group = "virtualMail";
   };
 
   system.stateVersion = "24.05";
