@@ -187,6 +187,7 @@
     # reference an existing ACME configuration
     x509.useACMEHost = config.mailserver.fqdn;
 
+    dmarcReporting.enable = true;
     # A list of all login accounts. To create the password hashes, use
     # nix-shell -p mkpasswd --run 'mkpasswd -s'
     loginAccounts = {
