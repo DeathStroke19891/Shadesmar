@@ -151,6 +151,8 @@
       global = {
         server_name = "sridharkedlaya.xyz";
         private_key = config.sops.secrets.matrix_key.path;
+      };
+      client_api = {
         trusted_third_party_id_servers = [
           "matrix.org"
           "vector.im"
