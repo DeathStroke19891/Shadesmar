@@ -12,6 +12,8 @@
     inputs.disko.nixosModules.disko
     inputs.sops-nix.nixosModules.sops
     inputs.simple-nixos-mailserver.nixosModule
+    inputs.tangled.nixosModules.knot
+    inputs.tangled.nixosModules.spindle
     ./disk-config.nix
     ./hardware-configuration.nix
   ];
@@ -29,7 +31,11 @@
     efiInstallAsRemovable = true;
   };
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.AllowUsers = ["git"];
+    settings.AllowGroups = ["git" "wheel"];
+  };
 
   services.fail2ban.enable = true;
 
@@ -118,6 +124,26 @@
     virtualHosts."mail.sridharkedlaya.xyz" = {
       enableACME = true;
       forceSSL = true;
+    };
+
+    virtualHosts."knot.sridharkedlaya.xyz" = {
+      enableACME = true;
+      forceSSL = true;
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:5555";
+        proxyWebsockets = true;
+      };
+    };
+
+    virtualHosts."spindle.sridharkedlaya.xyz" = {
+      enableACME = true;
+      forceSSL = true;
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:6555";
+        proxyWebsockets = true;
+      };
     };
   };
 
@@ -212,6 +238,28 @@
     isSystemUser = true;
     createHome = false;
     group = "virtualMail";
+  };
+
+  services.tangled = {
+    knot = {
+      enable = true;
+      gitUser = "git";
+      stateDir = "/spiritual_realm/tangled-knot";
+      repo.scanPath = "/spiritual_realm/tangled-knot/repos";
+      server = {
+        hostname = "knot.sridharkedlaya.xyz";
+        owner = "did:plc:gil4sxzvroogvte7tmrcla2t";
+      };
+    };
+
+    spindle = {
+      enable = true;
+      server = {
+        hostname = "spindle.sridharkedlaya.xyz";
+        owner = "did:plc:gil4sxzvroogvte7tmrcla2t";
+      };
+      pipelines.workflowTimeout = "10m";
+    };
   };
 
   system.stateVersion = "24.05";

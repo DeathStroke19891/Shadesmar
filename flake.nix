@@ -15,7 +15,8 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
-
+    
+    tangled.url = "git+https://tangled.org/@tangled.org/core";
   };
 
   outputs = {
