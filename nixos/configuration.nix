@@ -151,6 +151,9 @@
       global = {
         server_name = "sridharkedlaya.xyz";
         private_key = config.sops.secrets.matrix_key.path;
+        trusted_third_party_id_servers = [
+          "matrix.org"
+        ];
       };
     };
   };
