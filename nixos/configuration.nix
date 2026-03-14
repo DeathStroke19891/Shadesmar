@@ -193,6 +193,8 @@
   };
 
   users.groups.dendrite = {};
+  users.groups.data = {};
+  users.groups.lightweaver = {};
 
   users.users.dendrite = {
     isSystemUser = true;
@@ -204,7 +206,7 @@
     lightweaver = {
       isNormalUser = true;
       description = "Sridhar D Kedlaya";
-      extraGroups = ["networkmanager" "wheel" "video" "audio" "input" "uinput" "power" "docker"];
+      extraGroups = ["lightweaver" "data" "networkmanager" "wheel" "video" "audio" "input" "uinput" "power" "docker"];
       packages = with pkgs; [];
       shell = pkgs.zsh;
     };
