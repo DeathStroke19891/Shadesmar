@@ -33,8 +33,8 @@
 
   services.openssh = {
     enable = true;
-    settings.AllowUsers = ["git"];
-    settings.AllowGroups = ["git" "wheel"];
+    # settings.AllowUsers = ["git"];
+    # settings.AllowGroups = ["git" "wheel"];
   };
 
   services.fail2ban.enable = true;
