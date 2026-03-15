@@ -193,7 +193,12 @@
   };
 
   users.groups.dendrite = {};
+
   users.groups.data = {};
+  systemd.tmpfiles.rules = [
+    "d /spiritual_realm 2775 root data - -"
+  ];
+
   users.groups.lightweaver = {};
 
   users.users.dendrite = {
